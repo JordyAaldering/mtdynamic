@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 use std::ffi::{c_char, CStr};
+use std::fs;
+use std::io::Write;
 
 use crate::sample::{Sample, SampleInstant};
 use crate::Mtd;
@@ -62,10 +64,20 @@ extern "C" fn MTDnumThreads(mtd: *mut &mut MTDs, funname: *const c_char) -> i32 
 extern "C" fn MTDfree(mtd: *mut MTDs) {
     let mtd = unsafe { std::ptr::read(mtd) };
 
-    let (_, history) = mtd.mtds
-        .into_values()
-        .max_by_key(|(_, history)| history.len())
+    let (name, (_, history)) = mtd.mtds
+        .into_iter()
+        .max_by_key(|(_, (_, history))| history.len())
         .unwrap();
+
+    let mut file = fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(format!("{}.csv", name))
+        .unwrap();
+
+    for (sample, tc) in &history {
+        let _ = writeln!(file, "{},{},{}", tc, sample.runtime, sample.energy);
+    }
 
     let runtimes = history.iter().map(|(sample, _)| sample.runtime).collect::<Vec<_>>();
     let energies = history.iter().map(|(sample, _)| sample.energy).collect::<Vec<_>>();
