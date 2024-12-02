@@ -8,7 +8,7 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=sac_adapt_nbody.out
 
-printf "size,runtime,runtimesd,energy,energysd\n"
+printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 # Static approaches
 for size in 500 1000 1500; do

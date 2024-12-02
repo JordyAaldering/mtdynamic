@@ -18,6 +18,8 @@ for size in 10000 25000 40000; do
     ./relax -mt 8
     printf "$size,12,"
     ./relax -mt 12
+    printf "$size,14,"
+    ./relax -mt 14
     printf "$size,16,"
     ./relax -mt 16
 done
