@@ -13,7 +13,8 @@ cargo build --release --example adapt_fast
 # Warmup
 stress --cpu 16 --timeout 30
 
-./target/release/examples/adapt_fast 8  false false
-./target/release/examples/adapt_fast 12 false false
-./target/release/examples/adapt_fast 16 false false
-./target/release/examples/adapt_fast 16 true  false
+./target/release/examples/adapt_fast 8  s false
+./target/release/examples/adapt_fast 12 s false
+./target/release/examples/adapt_fast 16 s false
+./target/release/examples/adapt_fast 16 e false
+./target/release/examples/adapt_fast 16 r false

@@ -10,7 +10,6 @@ use rapl_energy::{EnergyProbe, Rapl};
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     let max_threads: usize = args[1].parse().unwrap();
-    let do_dynamic: bool = args[2].parse().unwrap();
     let print_all: bool = args[3].parse().unwrap();
 
     const CYCLES: [(usize, bool); 6] = [
@@ -22,10 +21,12 @@ fn main() {
         (1500, true),
     ];
 
-    let mut mtd = if do_dynamic {
-        Mtd::energy_controller(max_threads, 10)
-    } else {
-        Mtd::fixed_controller(max_threads)
+    let mode = args[2].chars().next().unwrap();
+    let mut mtd = match mode {
+        's' => Mtd::fixed_controller(max_threads),
+        'e' => Mtd::energy_controller(max_threads, 10),
+        'r' => Mtd::runtime_controller(max_threads),
+        s => unreachable!("{}", s),
     };
 
     let mut rapl = Rapl::now(false).unwrap();
@@ -67,7 +68,7 @@ fn main() {
             let runtime_sd = statistical::population_standard_deviation(&runtimes, Some(runtime));
             let energy_sd = statistical::population_standard_deviation(&energies, Some(energy));
 
-            let threads_str = if do_dynamic { "mt".to_string() } else { max_threads.to_string() };
+            let threads_str = if mode == 's' { max_threads.to_string() } else { mode.to_string() };
             println!("{},{},{},{},{},{},{},{}", threads_str, size, pin_threads, mtd.num_threads, runtime, runtime_sd, energy, energy_sd);
         }
     }
