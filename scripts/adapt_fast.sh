@@ -13,10 +13,10 @@ cargo build --release --example adapt_fast
 # Warmup
 stress --cpu 16 --timeout 30
 
-printf "threads,size,pin,runtime,runtimesd,energy,energysd\n"
+printf "mode,threads,size,pin,runtime,energy\n"
 
-./target/release/examples/adapt_fast 8  s false
-./target/release/examples/adapt_fast 12 s false
-./target/release/examples/adapt_fast 16 s false
-./target/release/examples/adapt_fast 16 e false
-./target/release/examples/adapt_fast 16 r false
+#./target/release/examples/adapt_fast 8  s
+#./target/release/examples/adapt_fast 12 s
+#./target/release/examples/adapt_fast 16 s
+./target/release/examples/adapt_fast 16 e
+./target/release/examples/adapt_fast 16 r
