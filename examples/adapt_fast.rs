@@ -31,8 +31,6 @@ fn main() {
 
     let mut rapl = Rapl::now(false).unwrap();
 
-    println!("size,pin,threads,runtime,energy");
-
     for (size, pin_threads) in CYCLES {
         let x = black_box(Matrix::random(size, size));
         let y = black_box(Matrix::random(size, size));
@@ -69,7 +67,7 @@ fn main() {
             let energy_sd = statistical::population_standard_deviation(&energies, Some(energy));
 
             let threads_str = if mode == 's' { max_threads.to_string() } else { mode.to_string() };
-            println!("{},{},{},{},{},{},{},{}", threads_str, size, pin_threads, mtd.num_threads, runtime, runtime_sd, energy, energy_sd);
+            println!("{},{},{},{},{},{},{}", threads_str, size, pin_threads, runtime, runtime_sd, energy, energy_sd);
         }
     }
 }
