@@ -15,23 +15,13 @@ fn main() {
         (16, true)
     };
 
-    const CYCLES: [(usize, bool); 14] = [
-        // Without pinning
-        (1250, false),
-        (1200, false),
+    const CYCLES: [(usize, bool); 6] = [
         (1150, false),
         (1100, false),
         (1050, false),
-        (1000, false),
-        ( 950, false),
-        // With pinning
-        ( 950, true),
-        (1000, true),
         (1050, true),
         (1100, true),
         (1150, true),
-        (1200, true),
-        (1250, true),
     ];
 
     let mut mtd = if do_dynamic {
@@ -49,17 +39,19 @@ fn main() {
         let y = black_box(Matrix::random(size, size));
 
         for _ in 0..200 {
+            let num_threads = mtd.num_threads() as usize;
+            let pool = threadpool(num_threads, pin_threads);
+
             rapl.reset();
             let instant = Instant::now();
 
-            let num_threads = mtd.num_threads() as usize;
-            let pool = threadpool(num_threads, pin_threads);
             let _ = black_box(mtd.install(|| pool.install(|| x.mul(&y))));
 
             let runtime = instant.elapsed();
             let energy = rapl.elapsed();
+
             let runtime = runtime.as_secs_f32();
-            let energy: f32 = energy.values().sum();
+            let energy = energy.values().sum::<f32>();
             println!("{},{},{},{},{}", size, pin_threads, mtd.num_threads, runtime, energy);
         }
     }
