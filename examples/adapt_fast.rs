@@ -9,11 +9,9 @@ use rapl_energy::{EnergyProbe, Rapl};
 
 fn main() {
     let args: Vec<_> = std::env::args().collect();
-    let (max_threads, do_dynamic) = if let Some(max_threads) = args.get(1) {
-        (max_threads.parse().unwrap(), false)
-    } else {
-        (16, true)
-    };
+    let max_threads: usize = args[1].parse().unwrap();
+    let do_dynamic: bool = args[2].parse().unwrap();
+    let print_all: bool = args[3].parse().unwrap();
 
     const CYCLES: [(usize, bool); 6] = [
         ( 500, false),
@@ -38,6 +36,9 @@ fn main() {
         let x = black_box(Matrix::random(size, size));
         let y = black_box(Matrix::random(size, size));
 
+        let mut runtimes = Vec::with_capacity(200);
+        let mut energies = Vec::with_capacity(200);
+
         for _ in 0..200 {
             let num_threads = mtd.num_threads() as usize;
             let pool = threadpool(num_threads, pin_threads);
@@ -52,7 +53,22 @@ fn main() {
 
             let runtime = runtime.as_secs_f32();
             let energy = energy.values().sum::<f32>();
-            println!("{},{},{},{},{}", size, pin_threads, mtd.num_threads, runtime, energy);
+            runtimes.push(runtime);
+            energies.push(energy);
+
+            if print_all {
+                println!("{},{},{},{},{}", size, pin_threads, mtd.num_threads, runtime, energy);
+            }
+        }
+
+        if !print_all {
+            let runtime = statistical::mean(&runtimes);
+            let energy = statistical::mean(&energies);
+            let runtime_sd = statistical::population_standard_deviation(&runtimes, Some(runtime));
+            let energy_sd = statistical::population_standard_deviation(&energies, Some(energy));
+
+            let threads_str = if do_dynamic { "mt".to_string() } else { max_threads.to_string() };
+            println!("{},{},{},{},{},{},{},{}", threads_str, size, pin_threads, mtd.num_threads, runtime, runtime_sd, energy, energy_sd);
         }
     }
 }
