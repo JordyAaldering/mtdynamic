@@ -10,6 +10,9 @@
 
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
+# Warmup
+stress --cpu 16 --timeout 30
+
 for size in 10000 25000 40000; do
     ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
 
