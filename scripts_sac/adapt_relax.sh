@@ -12,7 +12,7 @@ printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 # Static approaches
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size -DITER=100
 
     printf "$size,8,"
     ./relax -mt 8
@@ -28,7 +28,7 @@ rm *_relax_*.csv
 
 # Dynamic approach
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size -DITER=200
 
     printf "$size,mt,"
     ./relax -mt 16
