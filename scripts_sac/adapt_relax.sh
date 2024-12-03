@@ -29,11 +29,19 @@ done
 
 rm *_relax_*.csv
 
-# Dynamic approach
+# Energy-based approach
 for size in 10000 25000 40000; do
     ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size
 
     printf "$size,mt,"
+    ./relax -mt 16
+done
+
+# Runtime-based approach
+for size in 10000 25000 40000; do
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt2 -mt_bind simple scripts_sac/relax.sac -o relax -DP=$size
+
+    printf "$size,rt,"
     ./relax -mt 16
 done
 
