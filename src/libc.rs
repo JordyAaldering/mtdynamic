@@ -78,7 +78,7 @@ extern "C" fn MTDfree(mtd: *mut MTDs) {
         let mut file = fs::OpenOptions::new()
             .create(true)
             .append(true)
-            .open(format!("{}.csv", name.chars().take(100).collect::<String>()))
+            .open(format!("{}_{}.csv", if mtd.runtime_based { "rt" } else { "mt" }, name.chars().take(100).collect::<String>()))
             .unwrap();
 
         for (sample, tc) in &history {
