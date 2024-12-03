@@ -107,7 +107,8 @@ int main()
     bodies = { [i] -> body(i) | [i] < [P] };
 
     i = 0;
-    while (_lt_SxS_(i, ITER)) {
+    iter = _hideValue_SxA_(0, ITER);
+    while (_lt_SxS_(i, iter)) {
         bodies = timestep(bodies, 0.01);
         i = _add_SxS_(i, 1);
     }
