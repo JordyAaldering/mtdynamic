@@ -15,8 +15,8 @@ struct MTDs {
 }
 
 #[no_mangle]
-extern "C" fn MTDcreate(max_threads: usize, runtime_based: bool, samples_per_update: usize) -> *mut MTDs {
-    let mtds = MTDs { max_threads, runtime_based, samples_per_update, mtds: HashMap::new() };
+extern "C" fn MTDcreate(max_threads: usize, runtime_based: bool) -> *mut MTDs {
+    let mtds = MTDs { max_threads, runtime_based, samples_per_update: if runtime_based { 20 } else { 10 }, mtds: HashMap::new() };
     Box::into_raw(Box::new(mtds))
 }
 
