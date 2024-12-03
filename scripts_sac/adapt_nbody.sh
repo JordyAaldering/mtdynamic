@@ -12,7 +12,7 @@ printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 # Static approaches
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size -DITER=100
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
 
     printf "$size,8,"
     ./nbody -mt 8
@@ -26,7 +26,7 @@ rm *_timestep_*.csv
 
 # Dynamic approach
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rt -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size -DITER=200
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rt -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
 
     printf "$size,mt,"
     ./nbody -mt 16
