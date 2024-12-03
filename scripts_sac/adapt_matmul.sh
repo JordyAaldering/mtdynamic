@@ -27,13 +27,19 @@ for size in 500 1000 1500; do
     ./matmul -mt 16
 done
 
-rm *_matmul_*.csv
-
-# Dynamic approach
+# Energy-based approach
 for size in 500 1000 1500; do
     ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rt -mt_bind simple scripts_sac/matmul.sac -o matmul -DP=$size -DITER=200
 
     printf "$size,mt,"
+    ./matmul -mt 16
+done
+
+# Runtime-based approach
+for size in 500 1000 1500; do
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rt -dort -mt_bind simple scripts_sac/matmul.sac -o matmul -DP=$size -DITER=200
+
+    printf "$size,rt,"
     ./matmul -mt 16
 done
 
