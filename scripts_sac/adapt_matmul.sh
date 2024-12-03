@@ -37,7 +37,7 @@ done
 
 # Runtime-based approach
 for size in 500 1000 1500; do
-    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rt2 -mt_bind simple scripts_sac/matmul.sac -o matmul -DP=$size -DITER=200
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rtt -mt_bind simple scripts_sac/matmul.sac -o matmul -DP=$size -DITER=200
 
     printf "$size,rt,"
     ./matmul -mt 16
