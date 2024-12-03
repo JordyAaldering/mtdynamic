@@ -66,7 +66,7 @@ extern "C" fn MTDfree(mtd: *mut MTDs) {
 
     let (name, (_, history)) = mtd.mtds
         .into_iter()
-        .max_by_key(|(_, (_, history))| history.len())
+        .max_by_key(|(_, (_, history))| history.iter().map(|(sample, _)| sample.runtime).sum::<f32>().ceil() as i32)
         .unwrap();
 
     let mut file = fs::OpenOptions::new()
