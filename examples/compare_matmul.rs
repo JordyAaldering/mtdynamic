@@ -9,10 +9,11 @@ use rapl_energy::{EnergyProbe, Rapl};
 
 fn main() {
     let args: Vec<_> = std::env::args().collect();
-    let size: usize = args[1].parse().unwrap();
-    let pin_threads: bool = args[2].parse().unwrap();
-    let max_threads: usize = args[3].parse().unwrap();
-    let mode: char = args[4].chars().next().unwrap();
+    let iter: usize = args[1].parse().unwrap();
+    let size: usize = args[2].parse().unwrap();
+    let pin_threads: bool = args[3].parse().unwrap();
+    let max_threads: usize = args[4].parse().unwrap();
+    let mode: char = args[5].chars().next().unwrap();
 
     let mut mtd = match mode {
         's' => Mtd::fixed_controller(max_threads),
@@ -29,7 +30,7 @@ fn main() {
     let mut runtimes = Vec::with_capacity(200);
     let mut energies = Vec::with_capacity(200);
 
-    for _ in 0..200 {
+    for _ in 0..iter {
         let num_threads = mtd.num_threads() as usize;
         let pool = threadpool(num_threads, pin_threads);
 

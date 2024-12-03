@@ -17,10 +17,11 @@ printf "threads,size,pin,runtime,runtimesd,energy,energysd\n"
 
 for pin in true false; do
     for size in 500 1000 1500; do
-        ./target/release/examples/compare_matmul $size $pin 8  s false
-        ./target/release/examples/compare_matmul $size $pin 12 s false
-        ./target/release/examples/compare_matmul $size $pin 16 s false
-        ./target/release/examples/compare_matmul $size $pin 16 e false
-        ./target/release/examples/compare_matmul $size $pin 16 r false
+        ./target/release/examples/compare_matmul $size 100 $pin 1  s false
+        ./target/release/examples/compare_matmul $size 100 $pin 8  s false
+        ./target/release/examples/compare_matmul $size 100 $pin 12 s false
+        ./target/release/examples/compare_matmul $size 100 $pin 16 s false
+        ./target/release/examples/compare_matmul $size 200 $pin 16 e false
+        ./target/release/examples/compare_matmul $size 200 $pin 16 r false
     done
 done
