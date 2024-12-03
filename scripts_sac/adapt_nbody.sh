@@ -8,6 +8,9 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=sac_adapt_nbody.out
 
+# Warmup
+stress --cpu 16 --timeout 30
+
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 # Static approaches

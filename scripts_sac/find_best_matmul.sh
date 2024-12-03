@@ -8,10 +8,10 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=sac_find_best_matmul.out
 
-printf "size,threads,runtime,runtimesd,energy,energysd\n"
-
 # Warmup
 stress --cpu 16 --timeout 30
+
+printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 for size in 500 1000 1500; do
     ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts_sac/matmul.sac -o matmul -DP=$size -DITER=200
