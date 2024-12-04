@@ -6,7 +6,7 @@
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=16
 #SBATCH --time=10:00:00
-#SBATCH --output=compare_matmul_rust.out
+#SBATCH --output=compare_rust.out
 
 cargo build --release --example compare
 

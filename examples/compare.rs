@@ -26,10 +26,10 @@ fn main() {
     let x = black_box(Matrix::random(size, size));
     let y = black_box(Matrix::random(size, size));
 
-    let mut runtimes = Vec::with_capacity(200);
-    let mut energies = Vec::with_capacity(200);
+    let mut runtimes = Vec::with_capacity(250);
+    let mut energies = Vec::with_capacity(250);
 
-    for _ in 0..200 {
+    for _ in 0..250 {
         let num_threads = mtd.num_threads() as usize;
         let pool = threadpool(num_threads, pin_threads);
 

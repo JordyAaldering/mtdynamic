@@ -6,7 +6,7 @@
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=16
 #SBATCH --time=10:00:00
-#SBATCH --output=sac_find_best_stencil.out
+#SBATCH --output=threads_stencil.out
 
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 

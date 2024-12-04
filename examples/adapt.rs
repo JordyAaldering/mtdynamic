@@ -29,7 +29,7 @@ fn main() {
         let x = black_box(Matrix::random(size, size));
         let y = black_box(Matrix::random(size, size));
 
-        for _ in 0..200 {
+        for _ in 0..250 {
             let num_threads = mtd.num_threads() as usize;
             let pool = threadpool(num_threads, pin_threads);
 

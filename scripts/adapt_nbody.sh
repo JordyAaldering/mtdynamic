@@ -6,7 +6,7 @@
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=16
 #SBATCH --time=10:00:00
-#SBATCH --output=sac_adapt_nbody.out
+#SBATCH --output=adapt_nbody.out
 
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 

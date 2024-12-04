@@ -6,7 +6,7 @@
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=16
 #SBATCH --time=10:00:00
-#SBATCH --output=find_best.out
+#SBATCH --output=threads_rust.out
 
 cargo build --release --example matmul
 
