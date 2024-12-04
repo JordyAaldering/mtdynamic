@@ -9,11 +9,10 @@ use rapl_energy::{EnergyProbe, Rapl};
 
 fn main() {
     let args: Vec<_> = std::env::args().collect();
-    let iter: usize = args[1].parse().unwrap();
-    let size: usize = args[2].parse().unwrap();
-    let pin_threads: bool = args[3].parse().unwrap();
-    let max_threads: usize = args[4].parse().unwrap();
-    let mode: char = args[5].chars().next().unwrap();
+    let size: usize = args[1].parse().unwrap();
+    let pin_threads: bool = args[2].parse().unwrap();
+    let max_threads: usize = args[3].parse().unwrap();
+    let mode: char = args[4].chars().next().unwrap();
 
     let mut mtd = match mode {
         's' => Mtd::fixed_controller(max_threads),
@@ -30,7 +29,7 @@ fn main() {
     let mut runtimes = Vec::with_capacity(200);
     let mut energies = Vec::with_capacity(200);
 
-    for _ in 0..iter {
+    for _ in 0..200 {
         let num_threads = mtd.num_threads() as usize;
         let pool = threadpool(num_threads, pin_threads);
 
@@ -53,6 +52,10 @@ fn main() {
     let runtime_sd = statistical::population_standard_deviation(&runtimes, Some(runtime));
     let energy_sd = statistical::population_standard_deviation(&energies, Some(energy));
 
-    let threads_str = if mode == 's' { max_threads.to_string() } else { mode.to_string() };
+    let threads_str = match mode {
+        'e' => "mt".to_string(),
+        'r' => "rt".to_string(),
+        _ => max_threads.to_string(),
+    };
     println!("{},{},{},{},{},{},{}", threads_str, size, pin_threads, runtime, runtime_sd, energy, energy_sd);
 }

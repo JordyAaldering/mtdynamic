@@ -10,7 +10,6 @@ use rapl_energy::{EnergyProbe, Rapl};
 fn main() {
     let args: Vec<_> = std::env::args().collect();
     let max_threads: usize = args[1].parse().unwrap();
-    let mode = args[2].chars().next().unwrap();
 
     const CYCLES: [(usize, bool); 6] = [
         ( 500, false),
@@ -21,14 +20,10 @@ fn main() {
         (1500, true),
     ];
 
-    let mut mtd = match mode {
-        's' => Mtd::fixed_controller(max_threads),
-        'e' => Mtd::energy_controller(max_threads, 10),
-        'r' => Mtd::runtime_controller(max_threads),
-        s => unreachable!("{}", s),
-    };
-
+    let mut mtd = Mtd::energy_controller(max_threads, 10);
     let mut rapl = Rapl::now(false).unwrap();
+
+    println!("threads,size,pin,runtime,energy");
 
     for (size, pin_threads) in CYCLES {
         let x = black_box(Matrix::random(size, size));
@@ -48,7 +43,7 @@ fn main() {
 
             let runtime = runtime.as_secs_f32();
             let energy = energy.values().sum::<f32>();
-            println!("{},{},{},{},{},{}", mode, size, pin_threads, mtd.num_threads, runtime, energy)
+            println!("{},{},{},{},{}", num_threads, size, pin_threads, runtime, energy);
         }
     }
 }
