@@ -35,7 +35,7 @@ done
 
 # Runtime-based approach
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rtr -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth_rtt -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
 
     printf "$size,rt,"
     ./nbody -mt 16
