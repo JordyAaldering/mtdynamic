@@ -74,7 +74,7 @@ extern "C" fn MTDfree(mtd: *mut MTDs) {
         .max_by_key(|(_, (_, history))| history.iter().map(|(sample, _)| sample.runtime).sum::<f32>().ceil() as i32)
         .unwrap();
 
-    if mtd.samples_per_update == 10 {
+    if mtd.samples_per_update < 999 {
         let mut file = fs::OpenOptions::new()
             .create(true)
             .append(true)
