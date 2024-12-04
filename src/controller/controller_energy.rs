@@ -39,7 +39,6 @@ impl Controller for EnergyController {
 
             if self.step_size > 0.155 {
                 // Decrease step size
-                println!("{}", self.step_size);
                 self.step_size = f32::max(self.step_size * 0.6, self.step_size / (0.85 + self.step_size));
             } else {
                 // Escape local optimum
