@@ -11,7 +11,7 @@
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts_sac/stencil.sac -o stencil -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts/stencil.sac -o stencil -DP=$size
 
     for threads in `seq 1 16`; do
         printf "$size,$threads,"

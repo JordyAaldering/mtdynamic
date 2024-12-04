@@ -11,7 +11,7 @@
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts_sac/nbody.sac -o nbody -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts/nbody.sac -o nbody -DP=$size
 
     for threads in `seq 1 16`; do
         printf "$size,$threads,"

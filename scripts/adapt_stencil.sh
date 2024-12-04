@@ -12,7 +12,7 @@ printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 # Static approaches
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts_sac/stencil.sac -o stencil -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth -mt_bind simple scripts/stencil.sac -o stencil -DP=$size
 
     printf "$size,8,"
     ./stencil -mt 8
@@ -26,7 +26,7 @@ done
 
 # Energy-based approach
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -mt_bind simple scripts_sac/stencil.sac -o stencil -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -mt_bind simple scripts/stencil.sac -o stencil -DP=$size
 
     printf "$size,mt,"
     ./stencil -mt 16
@@ -34,7 +34,7 @@ done
 
 # Runtime-based approach
 for size in 10000 25000 40000; do
-    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -domtdrt -mt_bind simple scripts_sac/stencil.sac -o stencil -DP=$size
+    ../sac2c/build_r/sac2c_p -noprelude -maxwlur 9 -t mt_pth_rt -domtdrt -mt_bind simple scripts/stencil.sac -o stencil -DP=$size
 
     printf "$size,rt,"
     ./stencil -mt 16
