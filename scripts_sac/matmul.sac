@@ -29,7 +29,7 @@ int main()
     b = { [i,j] -> _tod_S_(j) | [i,j] < [P,P] };
 
     i = 0;
-    while (_lt_SxS_(i, ITER)) {
+    while (_lt_SxS_(i, _hideValue_SxA_(0, ITER))) {
         a = matmul(a, b);
         i = _add_SxS_(i, 1);
     }

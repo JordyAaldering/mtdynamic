@@ -42,17 +42,8 @@ int main()
         [0.05, 0.15, 0.05]
     ];
 
-    //weights = [
-    //    [1.0,  4.0,  7.0,  4.0, 1.0],
-    //    [4.0, 20.0, 33.0, 20.0, 4.0],
-    //    [7.0, 33.0, 55.0, 33.0, 7.0],
-    //    [4.0, 20.0, 33.0, 20.0, 4.0],
-    //    [1.0,  4.0,  7.0,  4.0, 1.0]
-    //];
-    //weights = { iv -> _div_SxS_(_sel_VxA_(iv, weights), sum(weights)) };
-
     i = 0;
-    while (_lt_SxS_(i, ITER)) {
+    while (_lt_SxS_(i, _hideValue_SxA_(0, ITER))) {
         arr = relax(arr, weights);
         i = _add_SxS_(i, 1);
     }
