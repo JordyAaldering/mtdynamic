@@ -9,13 +9,13 @@ use crate::Mtd;
 #[repr(C)]
 struct MTDs {
     max_threads: usize,
-    runtime_based: bool,
+    runtime_based: i32,
     samples_per_update: usize,
     mtds: HashMap<String, (Mtd, Vec<(Sample, f32)>)>,
 }
 
 #[no_mangle]
-extern "C" fn MTDcreate(max_threads: usize, runtime_based: bool, samples_per_update: usize) -> *mut MTDs {
+extern "C" fn MTDcreate(max_threads: usize, runtime_based: i32, samples_per_update: usize) -> *mut MTDs {
     let mtds = MTDs { max_threads, runtime_based, samples_per_update, mtds: HashMap::new() };
     Box::into_raw(Box::new(mtds))
 }
@@ -27,7 +27,7 @@ extern "C" fn MTDstart(mtd: *mut &mut MTDs, funname: *const c_char) -> Box<Sampl
     let funname = funname.to_str().unwrap().to_string();
 
     if !mtd.mtds.contains_key(&funname) {
-        let controller = if mtd.runtime_based {
+        let controller = if mtd.runtime_based == 1 {
             Mtd::runtime_controller(mtd.max_threads)
         } else {
             Mtd::energy_controller(mtd.max_threads, mtd.samples_per_update)
@@ -78,7 +78,7 @@ extern "C" fn MTDfree(mtd: *mut MTDs) {
         let mut file = fs::OpenOptions::new()
             .create(true)
             .append(true)
-            .open(format!("{}_{}.csv", if mtd.runtime_based { "rt" } else { "mt" }, name.chars().take(100).collect::<String>()))
+            .open(format!("{}_{}.csv", if mtd.runtime_based == 1 { "rt" } else { "mt" }, name.chars().take(100).collect::<String>()))
             .unwrap();
 
         for (sample, tc) in &history {
