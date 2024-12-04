@@ -27,21 +27,17 @@ impl Controller for EnergyController {
         let energy_samples = samples.into_iter().map(|sample| sample.energy).collect::<Vec<_>>();
         let e_next = statistical::median(&energy_samples);
 
-        if e_next > self.e_prev * 1.50 {
-            // Previous iteration performed a lot better
+        if e_next < self.e_prev * 0.50 || e_next > self.e_prev * 1.50 {
             self.reset_direction();
             self.reset_step_size();
         } else {
             if e_next > self.e_prev {
-                // Previous iteration performed (a bit) better
                 self.step_direction = -self.step_direction;
             }
 
             if self.step_size > 0.155 {
-                // Decrease step size
                 self.step_size = f32::max(self.step_size * 0.6, self.step_size / (0.85 + self.step_size));
             } else {
-                // Escape local optimum
                 self.reset_direction();
                 self.reset_step_size();
             }
