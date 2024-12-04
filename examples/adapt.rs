@@ -43,7 +43,7 @@ fn main() {
 
             let runtime = runtime.as_secs_f32();
             let energy = energy.values().sum::<f32>();
-            println!("{},{},{},{},{}", num_threads, size, pin_threads, runtime, energy);
+            println!("{},{},{},{},{}", mtd.num_threads, size, pin_threads, runtime, energy);
         }
     }
 }

@@ -10,9 +10,6 @@
 
 cargo build --release --example compare
 
-# Warmup
-stress --cpu 16 --timeout 30
-
 printf "threads,size,pin,runtime,runtimesd,energy,energysd\n"
 
 for pin in true false; do

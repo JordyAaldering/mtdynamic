@@ -8,9 +8,6 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=sac_find_best_nbody.out
 
-# Warmup
-stress --cpu 16 --timeout 30
-
 printf "size,threads,runtime,runtimesd,energy,energysd\n"
 
 for size in 10000 25000 40000; do

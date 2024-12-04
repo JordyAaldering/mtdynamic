@@ -8,7 +8,4 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=overhead.out
 
-# Warmup
-stress --cpu 16 --timeout 30
-
 cargo run --release --example overhead

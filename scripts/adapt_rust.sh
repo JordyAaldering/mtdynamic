@@ -8,9 +8,4 @@
 #SBATCH --time=10:00:00
 #SBATCH --output=adapt_rust.out
 
-cargo build --release --example adapt
-
-# Warmup
-stress --cpu 16 --timeout 30
-
-./target/release/examples/adapt 16
+cargo run --release --example adapt 16
