@@ -18,6 +18,8 @@ for size in 10000 25000 40000; do
     ./nbody -mt 8
     printf "$size,12,"
     ./nbody -mt 12
+    printf "$size,14,"
+    ./nbody -mt 14
     printf "$size,16,"
     ./nbody -mt 16
 done

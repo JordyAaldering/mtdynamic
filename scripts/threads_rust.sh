@@ -13,7 +13,7 @@ cargo build --release --example matmul
 printf "pin,size,threads,runtime,runtimesd,energy,energysd\n"
 
 for pin in true false; do
-    for size in `seq 500 100 1500`; do
+    for size in 500 1000 1500; do
         for threads in `seq 1 16`; do
             printf "$pin,$size,$threads,"
             ./target/release/examples/matmul $size 50 $threads $pin "fixed"
