@@ -14,6 +14,8 @@ printf "size,threads,runtime,runtimesd,energy,energysd\n"
 for size in 10000 25000 40000; do
     ../sac2c/build_r/sac2c_p -noprelude -t mt_pth -mt_bind simple scripts/nbody.sac -o nbody -DP=$size
 
+    printf "$size,1,"
+    ./nbody -mt 1
     printf "$size,8,"
     ./nbody -mt 8
     printf "$size,12,"
